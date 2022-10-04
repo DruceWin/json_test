@@ -13,24 +13,13 @@ import json
 class JsonPage(View):
     @staticmethod
     def get(request):
-        data = {
-            "name": "Leanne Graham",
-            "username": "Bret",
-            "address": {
-                "street": "Kulas Light",
-                "suite": "Apt. 556",
-                "city": "Gwenborough",
-                "zipcode": "92998-3874",
-                "geo": {
-                    "lat": "-37.3159",
-                    "lng": "81.1496"
-                }
-            },
-            "phone": "1-770-736-8031 x56442",
-        }
         response_API = requests.get("https://jsonplaceholder.typicode.com/users")
         data2 = response_API.text
         parse_json = json.loads(data2)
-        print(parse_json)
+
         active_case = parse_json[0]
+        print(active_case['name'])
+        print(active_case['username'])
+        print(active_case['phone'])
+        print(active_case['address']['city'])
         return JsonResponse(active_case)
