@@ -9,7 +9,7 @@
 
 <form action="{% url 'jsonapp:json_page' %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Получить юзера" />
+    <input type="submit" value="Получить юзеров и альбомы" />
 </form>
 
 <h6>Name: {{ name }}</h6>

@@ -6,6 +6,7 @@ from django.urls import reverse
 
 
 class JsonUser(models.Model):
+    id_user = models.IntegerField()
     name = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
@@ -16,3 +17,9 @@ class JsonUser(models.Model):
 
     def get_absolute_url(self):
         return reverse('jsonapp:profile_page', args=[self.id])
+
+
+class JsonAlbum(models.Model):
+    id_album = models.IntegerField()
+    id_users = models.ForeignKey('JsonUser', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
