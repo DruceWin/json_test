@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.views import View
 import json
 
+
 class JsonPage(View):
     @staticmethod
     def get(request):
@@ -18,8 +19,6 @@ class JsonPage(View):
         parse_json = json.loads(data2)
 
         active_case = parse_json[0]
-        print(active_case['name'])
-        print(active_case['username'])
-        print(active_case['phone'])
-        print(active_case['address']['city'])
-        return JsonResponse(active_case)
+        context = {'name': active_case['name'], 'username': active_case['username'], 'phone': active_case['phone'],
+                   'address_city': active_case['address']['city']}
+        return render(request, 'page1.html', context)
