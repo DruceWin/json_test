@@ -14,6 +14,16 @@ from .models import JsonUser
 
 
 class JsonPage(View):
+    count = None
+
+    @classmethod
+    def counter(cls):
+        if cls.count is None or cls.count == 9:
+            cls.count = 0
+        else:
+            cls.count += 1
+        return cls.count
+
     def get(self, request):
         return render(request, 'page1.html')
 
@@ -21,9 +31,7 @@ class JsonPage(View):
         response_api = requests.get("https://jsonplaceholder.typicode.com/users")
         data = response_api.text
         parse_json = json.loads(data)
-        counter = 0 #не понимаю как реализовать счетчик
-        active_case = parse_json[counter]
-        counter += 1
+        active_case = parse_json[self.counter()]
         context = {'name': active_case['name'], 'username': active_case['username'], 'phone': active_case['phone'],
                    'address_city': active_case['address']['city']}
         new_user = JsonUser(name=active_case['name'],
