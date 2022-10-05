@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 
 # сохранить его в бд (поля которые нужно сохранить
 # (name, username, phone, address-city)),
@@ -13,3 +13,6 @@ class JsonUser(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('jsonapp:profile_page', args=[self.id])

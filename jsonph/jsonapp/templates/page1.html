@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
+<a href="{% url 'jsonapp:db_page' %}">Список текущих пользователей</a>
+
+<form action="{% url 'jsonapp:json_page' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Получить юзера" />
+</form>
+
 <h6>Name: {{ name }}</h6>
 <h6>Username: {{ username }}</h6>
 <h6>Phone: {{ phone }}</h6>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="{% url 'jsonapp:json_page' %}">На главную</a>
+{% for j_user in json_users %}
+<div>
+    <h4><a href="{{j_user.get_absolute_url}}">Name: {{ j_user.name }}</a></h4>
+</div>
+{% endfor %}
+</body>
+</html>
