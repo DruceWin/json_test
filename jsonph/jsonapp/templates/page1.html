@@ -7,9 +7,19 @@
 <body>
 <a href="{% url 'jsonapp:db_page' %}">Список текущих пользователей</a>
 
-<form action="{% url 'jsonapp:json_page' %}" method="POST">
+<form action="{% url 'jsonapp:parse_user' %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="Получить юзеров и альбомы" />
+    <input type="submit" value="Получить юзеров" />
+</form>
+
+<form action="{% url 'jsonapp:parse_album' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Получить альбомы" />
+</form>
+
+<form action="{% url 'jsonapp:parse_photo' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Получить фото альбомов" />
 </form>
 
 </body>

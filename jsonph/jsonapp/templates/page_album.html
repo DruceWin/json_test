@@ -8,19 +8,16 @@
 <a href="{% url 'jsonapp:json_page' %}">На главную</a>
 <a href="{% url 'jsonapp:db_page' %}">Список текущих пользователей</a>
 <div>
-    <h4>Name: {{ json_user.name }}</h4>
-    <h4>Username: {{ json_user.username }}</h4>
-    <h4>Phone: {{ json_user.phone }}</h4>
-    <h4>City: {{ json_user.address_city }}</h4>
+    <h4>Album title: {{ json_album.title }}</h4>
 </div>
 <div>
-<h2>Albums:</h2>
-{% for j_album in json_albums %}
+<h2>Photos:</h2>
+{% for j_photo in json_photos %}
 <div>
-    <h4><a href="{{j_album.get_absolute_url}}">Name: {{ j_album.title }}</a></h4>
+    <h4>Title of photo: {{ j_photo.title }}</h4>
+    <img src="{{ j_photo.thumbnail_url }}" alt="Не загрузилось">
 </div>
 {% endfor %}
 </div>
-
 </body>
 </html>

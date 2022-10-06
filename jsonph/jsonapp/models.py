@@ -27,9 +27,16 @@ class JsonAlbum(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('jsonapp:album_page', args=[self.id])
+
+
 class JsonPhoto(models.Model):
     id_photo = models.IntegerField()
     id_albums = models.ForeignKey('JsonAlbum', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     url = models.URLField(max_length=200)
     thumbnail_url = models.URLField(max_length=200)
+
+    def __str__(self):
+        return self.title
