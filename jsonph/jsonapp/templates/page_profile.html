@@ -13,11 +13,14 @@
     <h4>Phone: {{ json_user.phone }}</h4>
     <h4>City: {{ json_user.address_city }}</h4>
 </div>
-{% for j_albom in json_alboms %}
 <div>
-    <h4>Title: {{ j_albom.title }}</h4>
+<h2>Albums:</h2>
+{% for j_album in json_albums %}
+<div>
+    <h4>Title: {{ j_album.title }}</h4>
 </div>
 {% endfor %}
+</div>
 
 </body>
 </html>
