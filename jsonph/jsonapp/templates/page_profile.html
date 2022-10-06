@@ -13,7 +13,7 @@
     <h4>Phone: {{ json_user.phone }}</h4>
     <h4>City: {{ json_user.address_city }}</h4>
 </div>
-<div>
+<div style="display: flex; width: 50%">
 <h2>Albums:</h2>
 {% for j_album in json_albums %}
 <div>
@@ -22,5 +22,13 @@
 {% endfor %}
 </div>
 
+<div style="display: flex; width: 50%">
+<h2>Posts:</h2>
+{% for j_post in json_posts %}
+<div>
+    <h4><a href="{{j_post.get_absolute_url}}">Name: {{ j_post.title }}</a></h4>
+</div>
+{% endfor %}
+</div>
 </body>
 </html>

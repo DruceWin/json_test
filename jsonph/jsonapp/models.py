@@ -10,6 +10,7 @@ class JsonUser(models.Model):
     name = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+    email = models.EmailField()
     address_city = models.CharField(max_length=100)
 
     def __str__(self):
@@ -40,3 +41,27 @@ class JsonPhoto(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class JsonPost(models.Model):
+    id_post = models.IntegerField()
+    id_users = models.ForeignKey('JsonUser', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    body = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('jsonapp:post_page', args=[self.id])
+
+
+class JsonComment(models.Model):
+    id_comment = models.IntegerField()
+    id_posts = models.ForeignKey('JsonPost', on_delete=models.CASCADE)
+    id_users = models.ForeignKey('JsonUser', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    body = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.name

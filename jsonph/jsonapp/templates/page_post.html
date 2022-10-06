@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="{% url 'jsonapp:json_page' %}">На главную</a>
+<a href="{% url 'jsonapp:db_page' %}">Список текущих пользователей</a>
+<div>
+    <h4>Post: {{ json_post.title }}</h4>
+</div>
+<div>
+<h2>Comments:</h2>
+{% for j_comment in json_comments %}
+<div>
+    <h3>Title of photo: {{ j_comment.name }}</h3>
+    <h3>Title of photo: {{ j_comment.id_users }}</h3>
+    <h4>Title of photo: {{ j_comment.body }}</h4>
+</div>
+{% endfor %}
+</body>
+</html>

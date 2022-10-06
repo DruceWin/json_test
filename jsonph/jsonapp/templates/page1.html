@@ -22,5 +22,15 @@
     <input type="submit" value="Получить фото альбомов" />
 </form>
 
+<form action="{% url 'jsonapp:parse_post' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Получить посты" />
+</form>
+
+<form action="{% url 'jsonapp:parse_comment' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Получить комментарии к постам" />
+</form>
+
 </body>
 </html>
