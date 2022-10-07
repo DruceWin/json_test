@@ -50,6 +50,7 @@ class ParseUser(ParsePage):
                                 name=dct['name'],
                                 username=dct['username'],
                                 phone=dct['phone'],
+                                email=dct['email'],
                                 address_city=dct['address']['city'])
             new_user.save()
         return render(request, 'page1.html')
@@ -161,14 +162,14 @@ class ParseComment(ParsePage):
         data = response_api.text
         parse_json = json.loads(data)
         json_users = JsonUser.objects.all()
-        lst_users_id = [i['id'] for i in json_users] #забрал id всех имеющихся пользователей в список
+        lst_users_id = [i.id for i in json_users] #забрал id всех имеющихся пользователей в список
         for dct in parse_json:
-            json_post = get_object_or_404(JsonPost, id_user=dct['postId'])
+            json_post = get_object_or_404(JsonPost, id_post=dct['postId'])
+            new_lst = lst_users_id.copy()
+            new_lst.remove(json_post.id_users_id) #убрал id пользователя написавшего пост из списка
+            r = random.choice(new_lst) #рандомно выбрал из оставшихся id
 
-            lst_users_id.remove(json_post['userId']) #убрал id пользователя написавшего пост из списка
-            r = random.choice(lst_users_id) #рандомно выбрал из оставшихся id
-
-            json_user = get_object_or_404(JsonUser, id_user=r)
+            json_user = get_object_or_404(JsonUser, id=r)
             new_comment = JsonComment(id_comment=dct['id'],
                                       id_posts=json_post,
                                       id_users=json_user,
@@ -191,7 +192,7 @@ class ProfilePage(View):
     def get(self, request, id):
         json_user = get_object_or_404(JsonUser, id=id)
         json_albums = JsonAlbum.objects.filter(id_users=id)
-        json_posts = JsonAlbum.objects.filter(id_users=id)
+        json_posts = JsonPost.objects.filter(id_users=id)
         context = {"json_user": json_user, "json_albums": json_albums, "json_posts": json_posts}
         return render(request, 'page_profile.html', context)
 
@@ -208,5 +209,11 @@ class PostPage(View):
     def get(self, request, id):
         json_post = get_object_or_404(JsonPost, id=id)
         json_comments = JsonComment.objects.filter(id_posts=id)
-        context = {"json_post": json_post, "json_comments": json_comments}
-        return render(request, 'page_album.html', context)
+        lst_users_id = [i.id_users_id for i in json_comments]
+        json_users = JsonUser.objects.filter(id__in=lst_users_id)
+        for json_comment in json_comments:
+            for json_user in json_users:
+                if json_user == json_comment.id_users:
+                    json_comment.__dict__['email'] = json_user.email
+        context = {"json_post": json_post, "json_comments": json_comments, 'json_users': json_users}
+        return render(request, 'page_post.html', context)
